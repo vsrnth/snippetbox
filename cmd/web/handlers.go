@@ -10,6 +10,8 @@ import (
 func (app *application) home(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Server", "Go")
 
+	app.logger.Info("Navigated to the home URL", "method", r.Method, "uri", r.URL.RequestURI())
+
 	// Initialize a slice containing the paths to the two files. It's important
 	// to note that the file containing our base template must be the *first*
 	// file in the slice.
@@ -45,15 +47,17 @@ func (app *application) snippetView(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-
+	app.logger.Info("Navigated to the snippet View", "method", r.Method, "uri", r.URL.RequestURI())
 	fmt.Fprintf(w, "Display a specific snippet with ID %d...", id)
 }
 
 func (app *application) snippetCreate(w http.ResponseWriter, r *http.Request) {
+	app.logger.Info("Navigated to the snippet Create page", "method", r.Method, "uri", r.URL.RequestURI())
 	w.Write([]byte("Display a form for creating a new snippet..."))
 }
 
 func (app *application) snippetCreatePost(w http.ResponseWriter, r *http.Request) {
+	app.logger.Info("Navigated to the snippet Create POST endpoint", "method", r.Method, "uri", r.URL.RequestURI())
 	w.WriteHeader(http.StatusCreated)
 	w.Write([]byte("Save a new snippet..."))
 }
